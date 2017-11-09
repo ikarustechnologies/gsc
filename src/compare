@@ -1,0 +1,30 @@
+#! /bin/csh
+#++++++++++++++++
+#.IDENTIFICATION compare
+#.LANGUAGE       C-shell
+#.AUTHOR         Francois Ochsenbein [CDS]
+#.ENVIRONMENT    
+#.KEYWORDS       
+#.VERSION  1.0   23-Apr-1999
+#.PURPOSE        
+#.COMMENTS       Compare Files
+#----------------
+
+set tt = /tmp/gsc-$$
+
+if ($#argv < 1) then
+    echo "Usage: $0 GSC-bin-file"
+    exit 1
+endif
+
+while ($#argv > 0)
+    set f = `echo $1 | rev | acut -d/ -f1,2 | rev`
+    set r = `echo $f | gawk -F/ '{printf("%05d\n", $2)}'` # Region
+    decode.exe $1 | tail +3 | sort | trcol -b11,21,31,37,43,48,51,53,58 \
+    | tr 0+\* '   ' > $tt.new				# New
+    tail +8641c /tourCD/*/$f | b2u -l 45 | sed '/^ *$/d' \
+    | sort | acut -i$r -c1- | tr 0+\* '   ' > $tt.ori	# Original
+    ~cats/too/adiff $tt.new $tt.ori
+    rm -f $tt.*
+    shift
+end

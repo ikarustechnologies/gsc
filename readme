@@ -1,0 +1,71 @@
+================================================================================
+This compact version of the Guide Star Catalogue, ACT Version
+(an all-sky astrometric and photometric catalog to support the operation
+of the Hubble Space Telescope, The Association of Universities for Research in
+Astronomy, Inc. ([c] 1989, 1992)) was prepared from the material kindly
+supplied by Bill J. Gray from the Pluto Project
+http://www.projectpluto.com/gsc_act.htm .
+Reference for the creation of the compact version (300Mbytes) is:
+    A. Preite-Martinez and F. Ochsenbein, and presented as
+    "A Pocket version of the Guide Star Catalogue" in
+    "Handling & Archiving Data from Ground-based Telescopes", Trieste 1993,
+     ESO Conference and Workshop Proceedings No 50 (ISBN 3-923524-53-6),
+     p. 199
+(details at http://archive.eso.org/skycat/gsc-engine/node2.html)
+================================================================================
+NOTE that a client/server program named "findgsc" allows to query the 3
+versions of the Guide Star Catalogue in batch mode, as well as some other
+very large catalogues on any Unix/Linux platform without having to actually
+load the data, see:   ftp://cdsarc.u-strasbg.fr/pub/cats/cdsclient.tar.Z
+================================================================================
+
+This directory includes executables and binary indexes for fast queries for
+Sun-Solaris workstations; the C code which generates the executables is tar'ed
+in file ../src.tar.gz
+Executables for Sun-Solaris are in the "bin" subdirectory, 
+and in the "bin-dos" subdirectory for PCs.
+
+regions.bin, regions.ind : binary indexes of regions used by gsc.exe.
+  (indexes stored as small-endian integers, can be used without
+  transformation on other architectures including big-endians)
+
+gsc.exe: query program which allows to retrieve the GSC stars in a
+  small circle around a target position (or at a distance between two
+  limits), or from a GSC-id identification (a number combining the region
+  and star) with the -g option. This program has a lot of other options
+  summarized with the -help option.
+
+  To have gsc.exe running properly, two environment variables are required:
+  GSCDAT :    the name of the directory which contains the [NS]* subdirectories;
+  GSCBIN :    the name of the directory which contains the binary indexes.
+  The default setup of these variables are:
+  GSCDAT=/GSC  on Unix       set GSCDAT=\GSC     on MS-DOS
+  GSCBIN=$GSCDAT/bin         set GSCBIN=$GSCDAT\bin
+
+  The usage of two variables allow to move only the binary files ($GSCBIN)
+  to a magnetic drive, leaving the bulk data ($GSCDAT) to a dedicated (e.g.
+  optical) drive.
+
+decode.exe:
+  allows to rebuild the original GSC files from the binary version.
+  For instance, to recreate the 4615 region, execute
+  decode.exe ../N8230/4615.GSC
+  A -fits option [added in August 2002] allow to generate FITS files, e.g.
+  decode.exe -fits ../N8230/4615.GSC > 4615.fits
+
+Questions, comments, suggestions are welcome!
+Francois Ochsenbein, 1999 December 11
+================================================================================
+
+        _/_/_/_/_/_/ . . .             Centre de Donnees astronomiques de
+      _/                               Strasbourg
+     _/                                http://cdsweb.u-strasbg.fr/CDS.html
+    _/        _/_/  _/_/_/
+   _/      _/      _/    _/            Francois Ochsenbein
+    _/_/_/_/      _/    _/_/_/_/       Internet: francois@astro.u-strasbg.fr
+         _/      _/    _/      _/         Phone: +33 88 15 07 55
+          _/_/  _/_/_/        _/            Fax: +33 88 15 07 40
+                             _/            Post: Observatoire Astronomique
+                            _/                   11, rue de l'Universite
+        . . . _/_/_/_/_/_/_/                     67000 STRASBOURG, France
+================================================================================
