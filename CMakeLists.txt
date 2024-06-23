@@ -8,7 +8,7 @@ if(COMMAND cmake_policy)
 endif(COMMAND cmake_policy)
 
 if(APPLE)
-list(APPEND CMAKE_C_FLAGS -Wno-implicit)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit")
 endif(APPLE)
 
 include_directories( ${CMAKE_CURRENT_BINARY_DIR})
