@@ -142,7 +142,7 @@ END                                                                             
 
 
 
-main(argc,argv)
+void main(argc,argv)
         int argc; char **argv;
 {
 	unsigned char c[12];

@@ -363,7 +363,7 @@ static FCT cmp[] = { cmp_1, cmp_2, cmp_3, cmp_4, cmp_5, cmp_6, cmp_7,
 
 /*==========================================================================*/
 
-main(argc,argv)
+void main(argc,argv)
   int argc; char **argv;
 {
   static char *GSCDAT  = (char *)0;
