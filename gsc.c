@@ -18,6 +18,11 @@
 *=================================================================*/
 
 #include <gsc.h>
+
+#ifndef M_PI
+#define M_PI 3.1415926535897932384626433832795
+#endif
+
 #define MAXOUT	1000000		/* Absolute Maximal Output Value  */
 #define REGBIN	"/regions.bin"
 #define REGIND	"/regions.ind"
@@ -289,7 +294,7 @@ static void prtOs(a)	GSCREC *a;		/* Print Os parameter	*/
     case 9: printf("%5s", a->plate); break;
     case 10: printf(" %c", a->mu); break;
     case 12: printf("%4.0f", a->posang); break;
-    case 13: printf("10.3f", a->epoch); break;
+    case 13: printf("%10.3f", a->epoch); break;
     default: printf("%5.1f", a->dist); break;
     }
 }
@@ -860,7 +865,7 @@ void main(argc,argv)
 			if (size < 0) { perror(region); exit(1); }
 			np = (size/12); tested += np;
 			if(opt[Ov] > 1) 
-			   printf("!....Read %ld bytes (%d records)\n", 
+			   printf("!....Read %d bytes (%d records)\n", 
 			   size, np);
 			c = table - 12;
 			k = np + 1;
@@ -925,7 +930,7 @@ void main(argc,argv)
 	    printf("####Output truncated to %d records", opt[On]);
 	    printf(" (not-computed matches -- see -n option)\n");
 	}
-	if(opt[Ov]) printf("!---Tested %ld stars in %d regions\n", 
+	if(opt[Ov]) printf("!---Tested %d stars in %d regions\n", 
 	    tested, tester);
     	if(opt[Oc]==0) puts("");
     }

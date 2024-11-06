@@ -14,21 +14,21 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
-/*==================================================================
-** NAME         :tod.c
-** TYPE         :void
-** DESCRIPTION  :transforms a [signed]sexagesimal string to decimal
-**              :accepts free input format
-** INPUT        :char *string
-** OUTPUT       :double *decimal
-** AUTHOR       :apm
-** DATE         :06/91; 09/91
-*=================================================================*/
+	/*==================================================================
+	** NAME         :tod.c
+	** TYPE         :void
+	** DESCRIPTION  :transforms a [signed]sexagesimal string to decimal
+	**              :accepts free input format
+	** INPUT        :char *string
+	** OUTPUT       :double *decimal
+	** AUTHOR       :apm
+	** DATE         :06/91; 09/91
+	*=================================================================*/
 
-void tod(string,deci)
-	double *deci;
-	char *string;
+	void tod(string, deci) double *deci;
+char *string;
 {
 	int sign;
 	double dd,s=0.,h=0.,m=0.; 

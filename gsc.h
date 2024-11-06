@@ -113,5 +113,7 @@ void prtgsc	_PARAMS((int fmt, int iepoch, GSCREC *gscrec));
 int tab2rec	_PARAMS((char *tab, GSCREC *rec));
 /* to_d.c	*/
 void tod	_PARAMS((double *deci, char *string));
+/* to_d.c	*/
+int to_d    _PARAMS((char *str, double *alphad, double *decd));
 
 #endif		/* GSC_DEF */
