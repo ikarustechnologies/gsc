@@ -15,14 +15,11 @@
 #include <math.h>
 #include <stdio.h>
 
-void dtos(deci,string,prec)
-	double *deci;
-	char *string;
-	int prec;
+void dtos(double *deci, char *string, int prec)
 {
 	char sign;
 	int h,m;
-	double dd,s,md,fabs();
+	double dd,s,md;
 
 	sign='+';
 	if(*deci < 0.0) sign='-';

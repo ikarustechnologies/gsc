@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.15.0)
+project(gsc C CXX)
 
 ##################  Paths  ################################
 set(DATA_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share/GSC/")

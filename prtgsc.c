@@ -48,9 +48,7 @@ GSC-id        ra   (2000)   dec      mag      d'  pa";
 
 static char line[256];
 
-char *gsc2a(fmt,iepoch,r)
-  int fmt,iepoch;
-  GSCREC *r;
+char *gsc2a(int fmt, int iepoch, GSCREC *r)
 {
   char sa1[20],sd1[20], epa[12];
   double rar,der, ep;
@@ -138,9 +136,7 @@ char *gsc2a(fmt,iepoch,r)
 	return(line);
 }
 
-void prtgsc(fmt,iepoch,r)
-  int fmt,iepoch;
-  GSCREC *r;
+void prtgsc(int fmt, int iepoch, GSCREC *r)
 {
 	puts(gsc2a(fmt,iepoch,r));
 }

@@ -30,7 +30,7 @@
 #define phir  150.	/* unused */
 #define radian (180./M_PI)
 
-typedef int (*FCT)();	/* Compare function */
+typedef int (*FCT)(GSCREC *, GSCREC *);	/* Compare function */
 typedef struct lgsc_s {	/* Linked GSC record*/
     struct lgsc_s *prev;
     GSCREC rec ;
@@ -140,14 +140,12 @@ pa      = position angle (degrees) from asked position\n\
 =======================================================================\
 ";
 
-int swap (array, nint)
+int swap (int *array, int nint)
 /*++++++++++++++++
 .PURPOSE  Swap the bytes in the array of integers if necessary
 .RETURNS  0/1/2 (type of swap)
 .REMARKS  Useful for big-endian machines
 -----------------*/
-  int *array ;	/* IN: The array to convert   */
-  int nint ;	/* IN: The number of integers */
 {
   static int value ;
   char *v, *p, *e ;
@@ -185,7 +183,7 @@ int swap (array, nint)
     exit(1) ;
 }
 
-static int cmp_1 (a, b)   GSCREC *a, *b ;	/* Sort on GSC Number */
+static int cmp_1 (GSCREC *a, GSCREC *b)	/* Sort on GSC Number */
 {
 	if(a->reg < b->reg) return(-order);
 	if(a->reg > b->reg) return(order);
@@ -196,91 +194,91 @@ static int cmp_1 (a, b)   GSCREC *a, *b ;	/* Sort on GSC Number */
 	return(0);
 }
 
-static int cmp_2 (a, b)   GSCREC *a, *b ;	/* Sort on RA  Number */
+static int cmp_2 (GSCREC *a, GSCREC *b)	/* Sort on RA  Number */
 {
 	if(a->ra < b->ra) return(-order);
 	if(a->ra > b->ra) return(order);
 	return(0);
 }
 
-static int cmp_3 (a, b)   GSCREC *a, *b ;	/* Sort on Declination */
+static int cmp_3 (GSCREC *a, GSCREC *b)	/* Sort on Declination */
 {
 	if(a->dec < b->dec) return(-order);
 	if(a->dec > b->dec) return(order);
 	return(0);
 }
 
-static int cmp_4 (a, b)   GSCREC *a, *b ;	/* Sort on poserr	*/
+static int cmp_4 (GSCREC *a, GSCREC *b)	/* Sort on poserr	*/
 {
 	if(a->poserr < b->poserr) return(-order);
 	if(a->poserr > b->poserr) return(order);
 	return(cmp_1(a,b));
 }
 
-static int cmp_5 (a, b)   GSCREC *a, *b ;	/* Sort on magnitude	*/
+static int cmp_5 (GSCREC *a, GSCREC *b)	/* Sort on magnitude	*/
 {
 	if(a->m < b->m) return(-order);
 	if(a->m > b->m) return(order);
 	return(cmp_1(a,b));
 }
 
-static int cmp_6 (a, b)   GSCREC *a, *b ;	/* Sort on mag.error	*/
+static int cmp_6 (GSCREC *a, GSCREC *b)	/* Sort on mag.error	*/
 {
 	if(a->merr < b->merr) return(-order);
 	if(a->merr > b->merr) return(order);
 	return(cmp_1(a,b));
 }
 
-static int cmp_7 (a, b)   GSCREC *a, *b ;	/* Sort on mb		*/
+static int cmp_7 (GSCREC *a, GSCREC *b)	/* Sort on mb		*/
 {
 	if(a->mb < b->mb) return(-order);
 	if(a->mb > b->mb) return(order);
 	return(cmp_1(a,b));
 }
 
-static int cmp_8 (a, b)   GSCREC *a, *b ;	/* Sort on class	*/
+static int cmp_8 (GSCREC *a, GSCREC *b)	/* Sort on class	*/
 {	
 	if(a->cl < b->cl) return(-order);
 	if(a->cl > b->cl) return(order);
 	return(cmp_1(a,b));
 }
 
-static int cmp_9 (a, b)   GSCREC *a, *b ;	/* Sort on plate	*/
+static int cmp_9 (GSCREC *a, GSCREC *b)	/* Sort on plate	*/
 { 
   int diff;
 	if (diff = strcmp(a->plate, b->plate)) return(diff*order);
 	return(cmp_1(a,b));
 }
 
-static int cmp_10 (a, b)   GSCREC *a, *b ;	/* Sort on multiple	*/
+static int cmp_10 (GSCREC *a, GSCREC *b)	/* Sort on multiple	*/
 { 
 	if(a->mu < b->mu) return(-order);
 	if(a->mu > b->mu) return(order);
 	return(cmp_1(a,b));
 }
 
-static int cmp_11 (a, b)   GSCREC *a, *b ;	/* Sort on Distance	*/
+static int cmp_11 (GSCREC *a, GSCREC *b)	/* Sort on Distance	*/
 { 
 	if(a->dist < b->dist) return(-order);
 	if(a->dist > b->dist) return(order);
 	return(cmp_1(a,b));
 }
 
-static int cmp_12 (a, b)   GSCREC *a, *b ;	/* Sort on PosAngle	*/
+static int cmp_12 (GSCREC *a, GSCREC *b)	/* Sort on PosAngle	*/
 { 
 	if(a->posang < b->posang) return(-order);
 	if(a->posang > b->posang) return(order);
 	return(cmp_1(a,b));
 }
 
-static int cmp_13 (a, b)   GSCREC *a, *b ;	/* Sort on Epoch	*/
+static int cmp_13 (GSCREC *a, GSCREC *b)	/* Sort on Epoch	*/
 { 
 	if(a->epoch < b->epoch) return(-order);
 	if(a->epoch > b->epoch) return(order);
 	return(cmp_1(a,b));
 }
 
-static void prtOs(a)	GSCREC *a;		/* Print Os parameter	*/
+static void prtOs(GSCREC *a)		/* Print Os parameter	*/
 {
     switch(opt[Os]) {
     case 1: printf("     %05d-%05d", a->reg, a->id); break;
@@ -300,9 +298,7 @@ static void prtOs(a)	GSCREC *a;		/* Print Os parameter	*/
 }
 
 /*-------- Interpret a GSC number / region ---------------------------------*/
-static int gscid(str, GSCid)	/* Returns number of bytes scanned */
-  char *str;
-  int GSCid[2] ;
+static int gscid(char *str, int GSCid[2])	/* Returns number of bytes scanned */
 {
   char *p; int i;
 	GSCid[0] = GSCid[1] = 0;
@@ -327,8 +323,7 @@ static int gscid(str, GSCid)	/* Returns number of bytes scanned */
 }
 
 /*-------- Addition of a new record in the list, ordered by compare --------*/
-static int add_rec(new)			/* Returns 0 if record ignored */
-  GSCREC *new;
+static int add_rec(GSCREC *new)		/* Returns 0 if record ignored */
 {
   LGSC *gc, *gp, *gn;
   	/* (1) Find where in the list we've to insert the new record */
@@ -368,8 +363,7 @@ static FCT cmp[] = { cmp_1, cmp_2, cmp_3, cmp_4, cmp_5, cmp_6, cmp_7,
 
 /*==========================================================================*/
 
-void main(argc,argv)
-  int argc; char **argv;
+void main(int argc, char **argv)
 {
   static char *GSCDAT  = (char *)0;
   static char *GSCBIN  = (char *)0;
@@ -804,7 +798,7 @@ void main(argc,argv)
 	    cc=read(fz,rec,sizeof(rec));
 	    if(cc < 1) break; 
 	    nrec = cc/sizeof(tr_regions);
-	    if (bin_swapped) swap(rec, cc/4) ;
+	    if (bin_swapped) swap((int *)rec, cc/4) ;
 
 	    Regions_LOOP :
 	    for(i=0;(i<nrec) && (zz1<=z2) && (nout <= opt[On]); i++) {
